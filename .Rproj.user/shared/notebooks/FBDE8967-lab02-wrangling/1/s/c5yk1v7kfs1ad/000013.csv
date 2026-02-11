@@ -1,1 +1,0 @@
-"0","data[data$study_hours < 0 | data$study_hours > 80, ]"

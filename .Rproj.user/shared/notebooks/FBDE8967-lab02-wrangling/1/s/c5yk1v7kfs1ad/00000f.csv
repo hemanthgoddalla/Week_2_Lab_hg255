@@ -1,1 +1,0 @@
-"0","data[data$grade < 0 | data$grade > 100, ]"
