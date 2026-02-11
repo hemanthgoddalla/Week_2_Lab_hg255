@@ -1,0 +1,85 @@
+---
+title: "Week 2 – Wrangling & Descriptive Statistics"
+author: "hg255"
+format: html
+editor: visual
+---
+
+## 1. Load Required Libraries
+
+```{r}
+library(dplyr)
+library(ggplot2)
+```
+
+## 2. Load Dataset
+
+```{r}
+data <- read.csv("../data/student_registrations.csv")
+head(data, 10)
+```
+
+## 3. Inspect Structure
+
+```{r}
+str(data)
+nrow(data)
+ncol(data)
+names(data)
+```
+
+## 4. Summary Statistics
+
+```{r}
+summary(data)
+
+mean(data$grade, na.rm = TRUE)
+median(data$study_hours, na.rm = TRUE)
+
+table(data$gender)
+table(data$course)
+```
+
+## 5. Missing Values Check
+
+```{r}
+colSums(is.na(data))
+```
+
+## 6. Out-of-Range Checks
+
+```{r}
+data[data$grade < 0 | data$grade > 100, ]
+data[data$attendance_rate < 0 | data$attendance_rate > 100, ]
+data[data$study_hours < 0 | data$study_hours > 80, ]
+```
+
+## 7. Check Category Consistency
+
+```{r}
+unique(data$gender)
+unique(data$course)
+```
+
+## 8. Validate Dates
+
+```{r}
+invalid_dates <- data[!grepl("^\\d{4}-\\d{2}-\\d{2}$", data$enrol_date), "enrol_date"]
+unique(invalid_dates)
+```
+
+## 9. Visualisations
+
+```{r}
+hist(data$grade, main="Distribution of Grades", xlab="Grade")
+hist(data$study_hours, main="Distribution of Study Hours", xlab="Study Hours")
+```
+
+## 10. Data Notes (Reflection)
+
+-   Missing values found in:
+-   Any invalid grades:
+-   Any attendance anomalies:
+-   Any inconsistent gender/course values:
+-   Any malformed dates:
+-   One challenge faced:

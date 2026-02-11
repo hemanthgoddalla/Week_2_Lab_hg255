@@ -1,0 +1,1 @@
+"0","hist(data$study_hours, main=""Distribution of Study Hours"", xlab=""Study Hours"")"

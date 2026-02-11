@@ -1,0 +1,8 @@
+"0","invalid_dates <- data[!grepl(""^\\d{4}-\\d{2}-\\d{2}$"", data$enrol_date), ""enrol_date""]"
+"0","unique(invalid_dates)"
+"1","[1]"
+"1"," """"          "
+"1"," ""abcd""      "
+"1"," ""2023/99/12"""
+"1","
+"
