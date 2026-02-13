@@ -1,0 +1,186 @@
+---
+title: "Lab 03 - Data Quality and Early Risks"
+author: "hg255"
+format: html
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+## 1. Setup
+
+```{r}
+library(dplyr)
+library(stringr)
+library(lubridate)
+```
+
+## 2. Load dataset
+
+```{r}
+df <- read.csv("../data/student_registrations.csv", stringsAsFactors = FALSE)
+glimpse(df)
+```
+
+## Data Quality
+
+### B1. Completeness (missing values)
+
+```{r}
+missing_counts <- colSums(is.na(df))
+missing_counts
+
+missing_rate <- round(100 * missing_counts / nrow(df), 2)
+missing_rate
+```
+
+### B2. Validity (range checks for numeric fields)
+
+Set reasonable rules (edit if your lab specifies different rules):
+
+```{r}
+invalid_age <- df %>% filter(is.na(age) == FALSE & (age < 16 | age > 60))
+invalid_grade <- df %>% filter(grade < 0 | grade > 100)
+invalid_attendance <- df %>% filter(is.na(attendance_rate) == FALSE & (attendance_rate < 0 | attendance_rate > 100))
+invalid_hours <- df %>% filter(study_hours < 0 | study_hours > 80)
+invalid_assignments <- df %>% filter(is.na(assignments_submitted) == FALSE & assignments_submitted < 0)
+invalid_satisfaction <- df %>% filter(is.na(satisfaction_level) == FALSE & (satisfaction_level < 1 | satisfaction_level > 5))
+
+c(
+  invalid_age = nrow(invalid_age),
+  invalid_grade = nrow(invalid_grade),
+  invalid_attendance = nrow(invalid_attendance),
+  invalid_hours = nrow(invalid_hours),
+  invalid_assignments = nrow(invalid_assignments),
+  invalid_satisfaction = nrow(invalid_satisfaction)
+)
+```
+
+(Optional) Print the problematic rows:
+
+```{r}
+invalid_grade
+invalid_attendance
+invalid_hours
+```
+
+### B3. Consistency (categorical labels)
+
+```{r}
+sort(unique(df$gender))
+sort(unique(df$course))
+
+gender_counts <- df %>% count(gender, sort = TRUE)
+course_counts <- df %>% count(course, sort = TRUE)
+
+gender_counts
+course_counts
+```
+
+### B4. Cleanliness (dates and malformed text)
+
+```{r}
+bad_dates <- df %>%
+  filter(is.na(enrol_date) == FALSE) %>%
+  mutate(enrol_date_trim = str_trim(enrol_date)) %>%
+  filter(enrol_date_trim == "" | !str_detect(enrol_date_trim, "^\\d{4}-\\d{2}-\\d{2}$"))
+
+nrow(bad_dates)
+unique(bad_dates$enrol_date)
+```
+
+Try parsing valid dates:
+
+```{r}
+df <- df %>%
+  mutate(enrol_date_parsed = suppressWarnings(ymd(enrol_date)))
+
+sum(is.na(df$enrol_date_parsed))
+```
+
+# Data Quality Summary
+
+## B5. Summary
+
+**Completeness:** Missingness is present in `age` (7, 5.83%),
+`attendance_rate` (1, 0.83%), `assignments_submitted` (7, 5.83%), and
+`satisfaction_level` (6, 5.00%). Other fields have no NA values.
+
+**Consistency:** Categorical fields are inconsistent: \* `gender`
+contains 8 labels including blanks and "?" (e.g., "Male", "M", "Female",
+"F", "female", "male", "", "?"). \* `course` contains multiple casing
+variants (e.g., "ai" vs "AI", "maths" vs "Maths", "data science" vs
+"Data Science", "cybersecurity" vs "Cybersecurity").
+
+**Cleanliness:** `enrol_date` has malformed entries (5 rows), including
+blank strings and incorrect formats ("abcd", "2023/99/12"). Date parsing
+resulted in 5 NA parsed dates.
+
+**Accuracy (Validity):** Range checks identified invalid values: \*
+`age`: 6 out-of-range values (\<16 or \>60) \* `grade`: 8 invalid values
+(\<0 or \>100) \* `attendance_rate`: 10 invalid values (\<0 or \>100) \*
+`study_hours`: 3 invalid values (\<0 or \>80)
+
+No invalid values were found for `assignments_submitted` \<0 or
+`satisfaction_level` outside 1–5.
+
+**Representativeness:** Category distributions show imbalance and label
+fragmentation. For example, `gender` is split across multiple equivalent
+labels ("Male" vs "M"), and `course` has multiple variants for the same
+category. This can distort comparisons unless standardised.
+
+------------------------------------------------------------------------
+
+## Early Risks (C1–C5)
+
+### C1: Completeness Risk
+
+-   **Evidence:** Missing values in `age` (7), `attendance_rate` (1),
+    `assignments_submitted` (7), and `satisfaction_level` (6).
+-   **Risk:** Missingness reduces usable sample size and can bias
+    descriptive stats or models if missingness is not random.
+-   **Consequence:** Group summaries and modelling results may be
+    skewed, and rows may be dropped during analysis without noticing.
+
+### C2: Accuracy Risk
+
+-   **Evidence:** Invalid values detected for `age` (6), `grade` (8),
+    `attendance_rate` (10), and `study_hours` (3). Examples include
+    grades above 100, attendance of 150 or -20, and study_hours of 200
+    or -10.
+-   **Risk:** Out-of-range values can inflate averages and distort
+    distributions.
+-   **Consequence:** Incorrect conclusions about performance or
+    engagement, and unstable model training due to noisy
+    targets/features.
+
+### C3: Representativeness Risk
+
+-   **Evidence:** Labels are fragmented: `gender` includes "", "?", "M",
+    "Male", "F", "Female", etc. `course` includes casing duplicates.
+    Counts show uneven group sizes (e.g., "data science" 18 vs "AI" 10).
+-   **Risk:** Fragmented labels create artificial subgroups and make
+    comparisons unreliable.
+-   **Consequence:** Misleading group-level insights and incorrect
+    joins/aggregations unless categories are standardised.
+
+### C4: Ethical / Sensitivity Risk
+
+-   **Evidence:** Variables like `gender` and `age` are personal
+    attributes and can be sensitive depending on use.
+-   **Risk:** Analysis may unintentionally reinforce stereotypes or be
+    interpreted as performance differences by demographic group.
+-   **Consequence:** Unfair or unethical interpretation if results are
+    presented without context, and reputational harm if used beyond
+    coursework.
+
+### C5: Consequence Risk (Downstream Impact)
+
+-   **Evidence:** Multiple issues occur simultaneously (missing +
+    invalid + inconsistent categories + malformed dates).
+-   **Risk:** Pipelines can silently fail, joins can mismatch, and
+    derived features (e.g., attendance bands, time since enrolment) can
+    be wrong.
+-   **Consequence:** Extra rework later, incorrect modelling features,
+    and reduced trust in final results if issues are not documented and
+    fixed early.

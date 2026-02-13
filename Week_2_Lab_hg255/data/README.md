@@ -1,0 +1,51 @@
+# Dataset README (Provenance)
+
+## Dataset name
+
+Student registrations dataset (student_registrations.csv)
+
+## Where it lives in this repo
+
+`data/student_registrations.csv`
+
+## Source and owner
+
+-   Source: Module-provided teaching dataset (ODS Week 2/3 labs)
+-   Data owner: University teaching team / module staff (course materials)
+-   Provided to students for educational use
+
+## License / allowed use
+
+-   Intended for coursework/lab learning within the module.
+-   Do not redistribute outside the module unless explicitly permitted by the teaching team.
+
+## Collection method (how data was created)
+
+-   Synthetic / educational dataset representing typical student registration and engagement variables.
+-   Values may include intentionally messy entries to support data quality exercises.
+
+## Data description (what each column means)
+
+-   `student_id`: Unique student identifier
+-   `age`: Student age (years)
+-   `gender`: Student gender label (may contain inconsistent formats)
+-   `course`: Course label (may contain inconsistent formats)
+-   `grade`: Grade/score (expected range 0–100)
+-   `study_hours`: Weekly study hours (expected non-negative, reasonable upper bound)
+-   `enrol_date`: Enrolment date as text (expected YYYY-MM-DD)
+-   `attendance_rate`: Attendance percentage (expected 0–100)
+-   `assignments_submitted`: Count of assignments submitted (expected non-negative)
+-   `satisfaction_level`: Satisfaction rating (expected 1–5)
+
+## Known limitations
+
+-   Missing values are present in some fields.
+-   Some rows contain impossible values (e.g., negative values, values above expected ranges).
+-   Categorical fields contain inconsistent casing/labels (e.g., “ai” vs “AI”).
+-   Dates may be malformed or blank.
+-   Not a real population dataset, so representativeness may be limited.
+
+## Intended use in this lab
+
+-   Demonstrate data quality assessment (missingness, invalid values, consistency checks)
+-   Document early risks for downstream analysis
