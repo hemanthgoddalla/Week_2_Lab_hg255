@@ -1,0 +1,96 @@
+---
+title: "Week 4 Lab – Distributions and First Model"
+author: "hg255"
+format: html
+---
+
+## Setup
+
+```{r}
+library(tidyverse)
+clean_data <- read_csv("../data/student_registrations_clean.csv")
+glimpse(clean_data)
+```
+
+## 1. Spread (SD vs IQR)
+
+```{r}
+summary(clean_data$grade)
+sd(clean_data$grade, na.rm = TRUE)
+IQR(clean_data$grade, na.rm = TRUE)
+
+summary(clean_data$study_hours)
+sd(clean_data$study_hours, na.rm = TRUE)
+IQR(clean_data$study_hours, na.rm = TRUE)
+```
+Grades show moderate variation (SD ≈ 6.65), while study hours show smaller spread (SD ≈ 2.81). The IQR confirms that grade variability in the middle 50% is wider than study hours, suggesting performance varies more than study effort within this sample.
+
+### Interpretation
+- SD measures overall variation.
+- IQR measures the middle 50%.
+- (Write 2 lines comparing grade vs study_hours)
+
+## 2. Distribution Shapes
+
+```{r}
+hist(clean_data$grade, breaks = 15, prob = TRUE,
+     main = "Distribution of Grades",
+     xlab = "Grade", col = "skyblue")
+
+curve(dnorm(x, mean(clean_data$grade), sd(clean_data$grade)),
+      add = TRUE, col = "red", lwd = 2)
+
+hist(clean_data$study_hours, breaks = 15, prob = TRUE,
+     main = "Distribution of Study Hours",
+     xlab = "Hours", col = "lightgreen")
+
+curve(dnorm(x, mean(clean_data$study_hours), sd(clean_data$study_hours)),
+      add = TRUE, col = "red", lwd = 2)
+```
+
+Grades are slightly left-skewed due to clustering near 100, indicating many high performers. The normal curve fits reasonably well but overestimates symmetry at the upper bound.
+Study hours appear approximately normal with mild right skew. The normal curve provides a reasonable approximation.
+
+## 3. Linear Regression
+
+```{r}
+model <- lm(grade ~ study_hours, data = clean_data)
+summary(model)
+```
+
+
+### Interpretation
+The intercept (76.65) represents the predicted grade when study hours equal zero.
+The slope (1.76) indicates that each additional study hour is associated with an average increase of 1.76 grade points.
+The relationship is statistically significant (p < 0.001), suggesting strong evidence of association.
+
+## 4. Visualise Regression
+
+```{r}
+plot(clean_data$study_hours, clean_data$grade,
+     xlab = "Study Hours", ylab = "Grade",
+     pch = 19, col = "darkgrey")
+
+abline(model, col = "red", lwd = 2)
+```
+
+The scatterplot shows a clear positive linear relationship between study hours and grade. The points are moderately concentrated around the regression line, indicating a reasonably strong association. There are no extreme outliers distorting the model.
+
+The R² value of 0.55 indicates that approximately 55% of the variation in student grades is explained by study hours alone, suggesting a moderately strong linear relationship.
+
+## 5. Residuals
+
+```{r}
+plot(model$residuals,
+     main = "Residuals",
+     col = "purple", pch = 19)
+
+abline(h = 0, col = "red", lty = 2)
+```
+
+Residuals appear randomly scattered around zero without a clear pattern, suggesting the linear model assumptions are reasonably satisfied. There is no obvious heteroscedasticity.
+
+## 6. Reflection
+
+There is a clear positive relationship between study hours and grades. This was expected, as increased study time should improve performance. I learned how distribution shape, spread measures, and residual analysis support proper interpretation of regression models rather than relying solely on R² values.
+I also learned that evaluating residual patterns is essential because a high R² value does not guarantee that model assumptions are satisfied or that predictions are reliable.
