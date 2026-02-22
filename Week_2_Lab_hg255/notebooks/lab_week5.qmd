@@ -1,0 +1,149 @@
+---
+title: "Week 5 Lab – Reproducibility, Sampling, and Simple Inference"
+author: "hg255"
+format: html
+---
+
+## 1. Setup
+
+```{r}
+library(readr)
+library(dplyr)
+```
+
+## 2. Load clean dataset
+
+```{r}
+data <- read_csv("../data/student_registrations_clean.csv", show_col_types = FALSE)
+glimpse(data)
+summary(data)
+```
+
+## 3. Imbalance vs Bias
+
+```{r}
+gender_tab <- table(data$gender)
+gender_tab
+
+barplot(gender_tab,
+        main = "Gender Distribution",
+        ylab = "Count",
+        col = "lightblue",
+        border = "white")
+
+round(prop.table(gender_tab), 3)
+```
+Imbalance: The dataset has more females (67.5%) than males (32.5%).
+
+Why imbalance is not automatically bias: A skewed sample can still be unbiased if it reflects the population being studied (e.g., course intake that year). Bias is about systematic error in measurement/collection, not just unequal counts.
+
+What context is needed: I would need to know how students were selected (whole cohort vs volunteer sample) and whether gender is linked to missingness or measurement differences.
+
+**Notes (write in your own words):**
+- What imbalance you see:
+- Why imbalance is not automatically bias:
+- What context you would need to confirm bias:
+
+## 4. Random split (seed + reproducibility)
+
+```{r}
+set.seed(7)
+
+data_split <- data %>%
+  mutate(group = sample(c("A", "B"), n(), replace = TRUE))
+
+data_split %>%
+  group_by(group) %>%
+  summarise(
+    n = n(),
+    mean_grade = mean(grade, na.rm = TRUE),
+    mean_hours = mean(study_hours, na.rm = TRUE)
+  )
+```
+
+Why set.seed() matters: It makes the random split reproducible so another person gets the same A/B grouping and summary values.
+
+What changes if seed changes: The exact membership of groups changes, so group means and sample sizes will vary slightly, which could change conclusions if the sample is small.
+
+## 5. Small sample model (show variability)
+
+```{r}
+set.seed(42)
+sample_data <- sample_n(data, 30)
+
+m <- lm(grade ~ study_hours, data = sample_data)
+summary(m)
+```
+
+Slope: In this sample, each additional study hour is associated with about +2.43 grade points on average. 
+
+R²: About 52% of the variation in grade is explained by study_hours in this 30-row sample, which is a moderately strong relationship. 
+
+Why small samples differ: With only 30 observations, which points are sampled matters more, so slopes and R² can shift across seeds even when the overall trend remains positive.
+
+## 6. Correlation test
+
+```{r}
+cor.test(data$study_hours, data$grade)
+```
+
+**Interpretation:**
+r: The correlation is 0.743, indicating a strong positive linear association between study hours and grades. 
+
+p-value: p < 2.2e-16 means the correlation is very unlikely to be zero in this dataset. 
+
+Why correlation is not causation: Higher study hours may be linked with other factors (motivation, prior knowledge, course type). Correlation alone cannot prove study hours “cause” higher grades.
+
+## 7. Simple group comparison (t-test)
+
+```{r}
+t.test(grade ~ gender, data = data)
+```
+
+**Interpretation:**
+What it checks: Whether mean grades differ between F and M groups. 
+
+Using CI and p-value: p = 0.2403 and the CI includes 0 (−1.07 to 4.19), so there is no strong evidence of a mean difference in grades by gender here.
+
+Limitation: The groups are imbalanced (81 vs 39), and the dataset context may not represent a broader population.
+
+## 8. Seed comparison (model stability)
+
+```{r}
+set.seed(10)
+m1 <- lm(grade ~ study_hours, data = sample_n(data, 30))
+
+set.seed(99)
+m2 <- lm(grade ~ study_hours, data = sample_n(data, 30))
+
+summary(m1)$coefficients
+summary(m2)$coefficients
+```
+
+What changed: The slope changes from 1.88 (seed 10) to 1.69 (seed 99) because the sampled rows differ.
+
+What stayed similar: Both slopes are positive and statistically strong, so the direction of the relationship is stable.
+
+Why it matters: Without fixing a seed, different runs can produce different coefficients, which affects reproducibility and fair comparison across reports.
+
+## 9. Reproducibility log
+
+```{r}
+writeLines(c(
+  "Week 5 reproducibility log",
+  paste("Date:", Sys.Date()),
+  "Seed(s) used: 7, 42, 10, 99"
+), con = "../outputs/week5-repro-log.txt")
+
+sessionInfo()
+```
+
+Confirm the log file exists:
+
+```{r}
+file.exists("../outputs/week5-repro-log.txt")
+```
+
+## 10. Short Reflection (5–7 lines)
+
+This week showed me that reproducibility is not automatic: if I do not set seeds, my results can change even when my code is identical. Sampling variability is especially visible when using small samples, where the regression slope and R² can shift between runs. I also learned to interpret uncertainty using confidence intervals and p-values rather than relying on a single statistic. A key risk is that someone rerunning my notebook without the same seed could report different coefficients. Next week I would add model diagnostics plots to better justify assumptions.

@@ -1,15 +1,15 @@
 student_id,course,grade,study_hours,gender,enrol_date,attendance_rate,major
 1001,AI Fundamentals,81.0,5.6,F,2024-09-14,0.71,Econ
 1002,Statistics,90.6,7.8,F,2024-09-16,0.76,CS
-1003,Data Science,100.0,8.6,M,2024-09-14,0.96,Math
+1003,Data Science,100.0,8.6,F,2024-09-14,0.96,Math
 1004,AI Fundamentals,100.0,13.2,M,2024-09-12,0.94,Econ
-1005,AI Fundamentals,99.2,11.0,M,2024-09-19,0.84,Econ
+1005,AI Fundamentals,99.2,11.0,F,2024-09-19,0.84,Econ
 1006,Statistics,80.1,4.7,F,2024-09-23,0.82,CS
 1007,Data Science,94.5,11.0,M,2024-09-15,0.85,CS
 1008,Data Science,98.8,8.8,F,2024-09-28,1.0,CS
 1009,AI Fundamentals,95.3,8.0,F,2024-09-02,0.88,Math
-1010,Machine Learning,100.0,11.8,M,2024-09-02,0.91,CS
-1011,AI Fundamentals,100.0,13.1,M,2024-09-23,0.84,Econ
+1010,Machine Learning,100.0,11.8,F,2024-09-02,0.91,CS
+1011,AI Fundamentals,100.0,13.1,F,2024-09-23,0.84,Econ
 1012,AI Fundamentals,100.0,12.8,F,2024-09-22,0.85,Econ
 1013,AI Fundamentals,88.3,7.5,M,2024-09-19,0.9,CS
 1014,AI Fundamentals,92.1,9.1,F,2024-09-25,0.86,CS
@@ -21,14 +21,14 @@ student_id,course,grade,study_hours,gender,enrol_date,attendance_rate,major
 1020,AI Fundamentals,74.8,6.4,M,2024-09-26,0.85,CS
 1021,Machine Learning,100.0,12.4,F,2024-09-22,0.88,Econ
 1022,Data Science,100.0,14.1,F,2024-09-17,0.84,CS
-1023,Machine Learning,98.4,9.8,M,2024-09-20,0.82,Math
+1023,Machine Learning,98.4,9.8,F,2024-09-20,0.82,Math
 1024,Statistics,100.0,13.0,M,2024-09-10,0.86,Econ
 1025,Statistics,100.0,11.1,F,2024-09-06,0.91,CS
-1026,Machine Learning,87.6,8.1,M,2024-09-15,0.82,Econ
+1026,Machine Learning,87.6,8.1,F,2024-09-15,0.82,Econ
 1027,Machine Learning,95.8,11.1,F,2024-09-22,0.81,CS
-1028,Machine Learning,100.0,14.6,M,2024-09-11,0.83,CS
+1028,Machine Learning,100.0,14.6,F,2024-09-11,0.83,CS
 1029,Statistics,95.4,9.9,F,2024-09-28,0.92,CS
-1030,Statistics,100.0,14.7,M,2024-09-05,0.95,Math
+1030,Statistics,100.0,14.7,F,2024-09-05,0.95,Math
 1031,Data Science,88.5,3.0,F,2024-09-01,0.88,Math
 1032,Data Science,100.0,12.5,M,2024-09-08,0.89,Econ
 1033,Statistics,94.0,10.3,M,2024-09-21,0.81,CS
@@ -39,7 +39,7 @@ student_id,course,grade,study_hours,gender,enrol_date,attendance_rate,major
 1038,Data Science,100.0,11.1,F,2024-09-07,0.76,CS
 1039,Data Science,100.0,14.4,M,2024-09-04,0.8,Econ
 1040,AI Fundamentals,94.2,8.4,F,2024-09-06,0.93,CS
-1041,AI Fundamentals,99.6,7.6,M,2024-09-13,0.96,CS
+1041,AI Fundamentals,99.6,7.6,F,2024-09-13,0.96,CS
 1042,AI Fundamentals,79.6,8.5,F,2024-09-20,0.82,IT
 1043,Machine Learning,100.0,12.7,M,2024-09-30,0.82,Math
 1044,Statistics,95.9,11.0,F,2024-09-15,0.87,CS
@@ -51,7 +51,7 @@ student_id,course,grade,study_hours,gender,enrol_date,attendance_rate,major
 1050,Machine Learning,93.4,9.0,F,2024-09-13,0.91,Econ
 1051,AI Fundamentals,94.1,8.8,M,2024-09-18,0.83,IT
 1052,Machine Learning,87.6,5.6,F,2024-09-28,0.81,Econ
-1053,AI Fundamentals,100.0,10.9,M,2024-09-10,0.98,Math
+1053,AI Fundamentals,100.0,10.9,F,2024-09-10,0.98,Math
 1054,Statistics,100.0,10.8,M,2024-09-30,0.92,Math
 1055,AI Fundamentals,90.0,10.0,F,2024-09-19,0.72,Math
 1056,Statistics,94.3,9.3,M,2024-09-17,0.82,Math
@@ -61,16 +61,16 @@ student_id,course,grade,study_hours,gender,enrol_date,attendance_rate,major
 1060,Data Science,98.7,7.6,M,2024-09-26,0.9,Math
 1061,AI Fundamentals,92.6,9.5,M,2024-09-23,0.8,IT
 1062,AI Fundamentals,97.3,11.2,F,2024-09-26,0.85,CS
-1063,Data Science,100.0,15.7,M,2024-09-05,0.7,Math
+1063,Data Science,100.0,15.7,F,2024-09-05,0.7,Math
 1064,Data Science,94.4,10.5,F,2024-09-26,0.97,IT
 1065,AI Fundamentals,89.4,10.8,M,2024-09-21,0.83,CS
 1066,Machine Learning,100.0,9.8,M,2024-09-30,0.91,Math
 1067,Statistics,80.5,4.2,M,2024-09-23,0.89,Math
 1068,Data Science,99.3,9.9,F,2024-09-09,0.95,Econ
 1069,Statistics,95.2,10.2,M,2024-09-12,0.82,CS
-1070,Machine Learning,100.0,17.4,M,2024-09-21,0.86,CS
+1070,Machine Learning,100.0,17.4,F,2024-09-21,0.86,CS
 1071,Machine Learning,93.7,9.4,F,2024-09-01,0.89,IT
-1072,Machine Learning,97.8,10.9,M,2024-09-26,0.91,Econ
+1072,Machine Learning,97.8,10.9,F,2024-09-26,0.91,Econ
 1073,Data Science,96.4,9.9,F,2024-09-26,0.93,Econ
 1074,Machine Learning,83.8,6.5,F,2024-09-01,0.82,Econ
 1075,Data Science,100.0,13.4,M,2024-09-15,0.8,Econ
@@ -84,26 +84,26 @@ student_id,course,grade,study_hours,gender,enrol_date,attendance_rate,major
 1083,Data Science,86.2,7.0,F,2024-09-21,0.94,Math
 1084,Statistics,90.2,8.3,F,2024-09-01,0.9,IT
 1085,AI Fundamentals,100.0,10.3,F,2024-09-16,0.88,IT
-1086,AI Fundamentals,93.7,8.5,M,2024-09-29,0.86,Math
+1086,AI Fundamentals,93.7,8.5,F,2024-09-29,0.86,Math
 1087,Machine Learning,91.1,5.3,F,2024-09-07,0.75,Math
-1088,Data Science,100.0,10.2,M,2024-09-05,0.79,Math
+1088,Data Science,100.0,10.2,F,2024-09-05,0.79,Math
 1089,Statistics,91.7,6.8,F,2024-09-22,0.83,Math
 1090,Machine Learning,98.0,11.4,M,2024-09-29,0.88,Math
-1091,Statistics,85.8,7.2,M,2024-09-23,0.85,Math
+1091,Statistics,85.8,7.2,F,2024-09-23,0.85,Math
 1092,Statistics,100.0,14.6,F,2024-09-03,0.92,Econ
 1093,Machine Learning,92.1,7.7,F,2024-09-12,0.88,Econ
 1094,Machine Learning,80.3,9.0,F,2024-09-26,0.85,Econ
 1095,Machine Learning,100.0,12.4,M,2024-09-16,1.0,Econ
 1096,Machine Learning,85.0,6.3,F,2024-09-19,0.88,Math
 1097,Machine Learning,90.9,10.7,M,2024-09-05,0.82,IT
-1098,Statistics,100.0,13.9,M,2024-09-22,0.98,CS
+1098,Statistics,100.0,13.9,F,2024-09-22,0.98,CS
 1099,Machine Learning,78.5,5.2,M,2024-09-25,0.93,Math
 1100,Data Science,100.0,10.6,F,2024-09-29,0.98,CS
 1101,AI Fundamentals,100.0,10.8,F,2024-09-14,0.84,IT
 1102,Machine Learning,97.2,12.3,M,2024-09-28,0.92,Econ
 1103,Machine Learning,83.2,6.3,M,2024-09-05,0.75,IT
 1104,Statistics,84.0,6.0,F,2024-09-15,0.9,Math
-1105,Machine Learning,98.6,11.6,M,2024-09-17,0.84,Econ
+1105,Machine Learning,98.6,11.6,F,2024-09-17,0.84,Econ
 1106,Machine Learning,100.0,10.9,F,2024-09-30,0.76,Math
 1107,Machine Learning,100.0,10.8,M,2024-09-14,0.92,Econ
 1108,Statistics,100.0,11.0,F,2024-09-30,0.72,CS
@@ -112,8 +112,8 @@ student_id,course,grade,study_hours,gender,enrol_date,attendance_rate,major
 1111,Statistics,91.6,10.9,M,2024-09-12,0.89,IT
 1112,AI Fundamentals,86.9,7.9,F,2024-09-16,0.92,Math
 1113,Statistics,100.0,15.6,F,2024-09-26,0.9,IT
-1114,Machine Learning,100.0,11.4,M,2024-09-26,0.95,CS
-1115,AI Fundamentals,89.6,6.4,M,2024-09-16,0.9,Math
+1114,Machine Learning,100.0,11.4,F,2024-09-26,0.95,CS
+1115,AI Fundamentals,89.6,6.4,F,2024-09-16,0.9,Math
 1116,Statistics,100.0,12.0,F,2024-09-21,0.84,CS
 1117,Data Science,87.5,7.1,M,2024-09-07,0.84,IT
 1118,Machine Learning,100.0,12.4,F,2024-09-04,0.83,IT

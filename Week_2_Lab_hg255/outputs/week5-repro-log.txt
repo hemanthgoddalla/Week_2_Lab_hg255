@@ -1,0 +1,3 @@
+Week 5 reproducibility log
+Date: 2026-02-22
+Seed(s) used: 7, 42, 10, 99
